@@ -1,5 +1,6 @@
 const initialSection = { title: 'Section0', completed: false };
-const initialState = [{ title: 'Intro', sections: [initialSection], completed: false }]
+const initialState = [{ title: 'Intro', sections: [initialSection], completed: false }];
+const INITIAL_CHAPTER = { sections: [], completed: false };
 
 const mapChapter = (chapter, action) => {
   const newChapter = {
@@ -16,10 +17,8 @@ const mapChapter = (chapter, action) => {
 export const chapters = function (state = initialState, action) {
   switch (action.type) {
     case 'ADD_CHAPTER':
-      if (action.title.length === 0) return state;
-      return state.concat({ title: action.title, sections: [], completed: false });
+      return state.concat({ ...INITIAL_CHAPTER, title: action.title });
     case 'ADD_SECTION':
-      if (action.title.length === 0) return state;
       return state.map((chapter, idx) => (
         idx === action.chapterIdx
           ? { ...chapter, sections: [...chapter.sections, { title: action.title, completed: false }], completed: false }

@@ -20,6 +20,7 @@ const ChaptersList = ({ chapters, addChapter, toggleSection, addSection }) => {
       ))}
       <form onSubmit={(e) => {
         e.preventDefault();
+        if (!e.target.title.value) return;
         addChapter(e.target.title.value);
         e.target.title.value = '';
       }} className='mt-1'>
@@ -47,6 +48,7 @@ const SectionsList = ({ chapter, toggleSection, cIdx, addSection }) => {
       }
       <form onSubmit={(e) => {
         e.preventDefault();
+        if (!e.target.title.value) return;
         addSection(e.target.title.value, cIdx);
         e.target.title.value = '';
       }}>
