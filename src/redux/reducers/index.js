@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { chapters } from './chapters';
-import { visibilityFilter } from './visibilityFilter';
+import chapters from '../slices/chapters';
+import visibilityFilter from '../slices/visibilityFilter';
 
 export default combineReducers(
   {

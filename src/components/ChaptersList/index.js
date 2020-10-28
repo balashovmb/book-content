@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import ChaptersList from './ChaptersList';
+import { addChapter, addSection, toggleSection } from '../../redux/slices/chapters';
 
 const filters = {
   SHOW_ALL: () => true,
@@ -22,20 +23,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  addChapter: (title) => dispatch({
-    type: 'ADD_CHAPTER',
-    title
-  }),
-  toggleSection: (cIdx, sIdx) => dispatch({
-    type: 'TOGGLE_SECTION',
-    chapterIdx: cIdx,
-    sectionIdx: sIdx
-  }),
-  addSection: (title, cIdx) => dispatch({
-    type: 'ADD_SECTION',
-    title,
-    chapterIdx: cIdx,
-  }),
+  addChapter: (title) => dispatch(addChapter(title)),
+  toggleSection: (cIdx, sIdx) => dispatch(toggleSection(cIdx, sIdx)),
+  addSection: (title, cIdx) => dispatch(addSection(title, cIdx)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChaptersList);
