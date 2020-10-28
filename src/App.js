@@ -1,33 +1,21 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+
+import ChaptersList from './components/ChaptersList/';
+import store from './redux/store';
+import Filter from './components/Filter';
+import BookStatus from './components/BookStatus';
+
 
 function App() {
   return (
-    <div className="flex flex-col h-full items-center justify-center bg-gray-200 text-gray-700">
-      <div className="flex items-center">
-        <h1 className="text-6xl font-thin tracking-wider">Create React App + Tailwind CSS</h1>
+    <Provider store={store}>
+      <div className="flex flex-col h-full items-center justify-center bg-gray-200 text-gray-700">
+        <BookStatus />
+        <Filter />
+        <ChaptersList />
       </div>
-      <p className="my-6 tracking-wide">
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <div className="mt-6 flex justify-center">
-        <a
-          className="uppercase hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="ml-10 uppercase hover:underline"
-          href="https://tailwindcss.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Tailwind
-        </a>
-      </div>
-    </div>
+    </Provider>
   );
 }
 
