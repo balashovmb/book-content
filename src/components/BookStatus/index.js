@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 
 import BookStatus from './BookStatus';
 
-const getChapters = (state) => state.chapters;
+const getChapters = (state) => state.chapters.entries;
 
 const getChaptersCount = createSelector(
   [getChapters],

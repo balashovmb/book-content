@@ -2,7 +2,8 @@ import React from 'react';
 
 import Button from '../Button';
 
-const ChaptersList = ({ chapters, addChapter, toggleSection, addSection }) => {
+const ChaptersList = ({ isLoading, chapters, addChapter, toggleSection, addSection }) => {
+  if (isLoading) return <div>Loading...</div>
   return (
     <div>
       {chapters && chapters.map((chapter, cIdx) => (

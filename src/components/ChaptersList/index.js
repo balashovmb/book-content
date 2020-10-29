@@ -18,7 +18,8 @@ const filterSections = (chapters, visibilityFilter) => (
 )
 
 const mapStateToProps = (state) => ({
-  chapters: filterSections(state.chapters, state.visibilityFilter)
+  isLoading: state.chapters.isLoading,
+  chapters: filterSections(state.chapters.entries, state.visibilityFilter)
 })
 
 const mapDispatchToProps = (dispatch) => ({
