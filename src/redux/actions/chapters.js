@@ -1,3 +1,4 @@
+import * as chaptersActions from '../actionTypes/chapters';
 import { API_CALL } from "../middleware/API";
 
 export const fetchChapters = () => ({

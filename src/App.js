@@ -6,6 +6,9 @@ import store from './redux/store';
 import Filter from './components/Filter';
 import BookStatus from './components/BookStatus';
 
+import {fetchChapters} from './redux/actions/chapters';
+
+store.dispatch(fetchChapters());
 
 function App() {
   return (

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const API_CALL = "API_CALL";
 
-const ROOT_URL = "https://bookcontent-534e.restdb.io/rest/chapters";
+const ROOT_URL = "https://bookcontent-534e.restdb.io/rest";
 const API_KEY = "5f998fb4231ba42851b49eaf";
 
 const APICall = ({ method, endpoint }) => (
@@ -17,7 +17,7 @@ const APICall = ({ method, endpoint }) => (
 )
 
 const APIMiddleware = store => next => action => {
-  if (action.API_CALL) return next(action);
+  if (!action.API_CALL) return next(action);
 
   const { [API_CALL]: apiCall, ...nextAction } = action;
 

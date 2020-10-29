@@ -1,11 +1,10 @@
 import * as chaptersActions from '../actionTypes/chapters';
 
-const initialSection = { title: 'Section0', completed: false };
 const initialState = {
   isLoading: false,
   isError: false,
   error: null,
-  entries: [{ title: 'Intro', sections: [initialSection], completed: false }]
+  entries: []
 };
 const INITIAL_CHAPTER = { sections: [], completed: false };
 
@@ -37,7 +36,7 @@ export const chapters = function (state = initialState, action) {
     case 'TOGGLE_SECTION':
       return {
         ...state,
-        entries: state.map((chapter, cIdx) => (
+        entries: state.entries.map((chapter, cIdx) => (
           cIdx === action.chapterIdx
             ? mapChapter(chapter, action)
             : chapter
