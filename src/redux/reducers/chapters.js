@@ -51,7 +51,7 @@ export const chapters = function (state = initialState, action) {
     case chaptersActions.FETCH_CHAPTERS_SUCCESS:
       return {
         ...initialState,
-        entries: action.response
+        entries: action.response[0].structure
       };
 
     case chaptersActions.FETCH_CHAPTERS_FAILURE:
