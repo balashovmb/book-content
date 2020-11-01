@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 
 import BookStatus from './BookStatus';
 
-const getChapters = (state) => state.chapters;
+const getChapters = (state) => state.chapters.entries;
 
 const getChaptersCount = createSelector(
   [getChapters],
@@ -33,6 +33,8 @@ const mapStateToProps = (state) => {
   if (chaptersCount === 0) return {
     chaptersCount, sectionsCount: 0, completedSectionsCount: 0, completedChaptersCount: 0, progress: 0
   };
+
+  console.log(state.chapters)
 
   return {
     chaptersCount,

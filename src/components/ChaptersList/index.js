@@ -9,8 +9,8 @@ const filters = {
   SHOW_UNCOMPLETED: (section) => !section.completed
 }
 
-const filterSections = (chapters, visibilityFilter) => (
-  chapters.map((chapter) => (
+const filterSections = (chapters, visibilityFilter) => (  
+  chapters.entries.map((chapter) => (
     {
       ...chapter,
       sections: chapter.sections.filter(filters[visibilityFilter])
