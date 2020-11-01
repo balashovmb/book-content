@@ -10,7 +10,7 @@ const filters = {
 }
 
 const filterSections = (chapters, visibilityFilter) => (
-  chapters.map((chapter) => (
+  chapters.entries.map((chapter) => (
     {
       ...chapter,
       sections: chapter.sections.filter(filters[visibilityFilter])

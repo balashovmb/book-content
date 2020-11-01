@@ -1,8 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const initialSection = { title: 'Section0', completed: false };
-const initialState = [{ title: 'Intro', sections: [initialSection], completed: false }];
+const API_KEY = '5f998fb4231ba42851b49eaf';
+
+const initialState = {
+  isLoading: false,
+  isError: false,
+  error: null,
+  entries: []
+};
 const INITIAL_CHAPTER = { sections: [], completed: false };
+
+export const fetchChapters = createAsyncThunk(
+  'chapters/fetchAll',
+  async() => {
+    const response = await axios({
+      method: 'GET',
+      url: 'https://bookcontent-534e.restdb.io/rest/chapters',
+      headers: {
+        "x-apikey": API_KEY
+      }
+    })
+    console.log(response.data[0].structure)
+  return response.data[0].structure;
+  }
+)
 
 const mapChapter = (chapter, action) => {
   const newChapter = {
@@ -15,7 +37,6 @@ const mapChapter = (chapter, action) => {
   newChapter.completed = newChapter.sections.length === newChapter.sections.filter(section => section.completed).length;
   return newChapter;
 }
-
 
 const chaptersSlice = createSlice({
   name: 'chapters',
@@ -37,9 +58,19 @@ const chaptersSlice = createSlice({
           ? mapChapter(chapter, action)
           : chapter
       ));
-    }
+    },
+  },
+  extraReducers: {
+    [fetchChapters.pending]: (state, action) => ({
+      ...state,
+      isLoading: true
+    }),
+    [fetchChapters.fulfilled]: (state, action) => ({
+      ...initialState,
+      entries: action.payload
+    })
   }
-})
+});
 
 export const { addChapter, addSection, toggleSection } = chaptersSlice.actions;
 export default chaptersSlice.reducer;
