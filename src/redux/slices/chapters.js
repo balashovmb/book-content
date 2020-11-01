@@ -8,7 +8,7 @@ const mapChapter = (chapter, action) => {
   const newChapter = {
     ...chapter,
     sections: chapter.sections.map((section, sIdx) => (
-      sIdx === action.sectionIdx
+      sIdx === action.payload.sIdx
         ? { ...section, completed: !section.completed }
         : section)),
   }
@@ -22,18 +22,18 @@ const chaptersSlice = createSlice({
   initialState,
   reducers: {
     addChapter(state, action) {
-      return state.concat({ ...INITIAL_CHAPTER, title: action.title });
+      return state.concat({ ...INITIAL_CHAPTER, title: action.payload });
     },
     addSection(state, action) {
       return state.map((chapter, idx) => (
-        idx === action.chapterIdx
-          ? { ...chapter, sections: [...chapter.sections, { title: action.title, completed: false }], completed: false }
+        idx === action.payload.cIdx
+          ? { ...chapter, sections: [...chapter.sections, { title: action.payload.title, completed: false }], completed: false }
           : chapter
       ));
     },
     toggleSection(state, action) {
       return state.map((chapter, cIdx) => (
-        cIdx === action.chapterIdx
+        cIdx === action.payload.cIdx
           ? mapChapter(chapter, action)
           : chapter
       ));
@@ -43,5 +43,3 @@ const chaptersSlice = createSlice({
 
 export const { addChapter, addSection, toggleSection } = chaptersSlice.actions;
 export default chaptersSlice.reducer;
-
-

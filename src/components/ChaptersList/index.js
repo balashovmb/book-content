@@ -24,8 +24,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addChapter: (title) => dispatch(addChapter(title)),
-  toggleSection: (cIdx, sIdx) => dispatch(toggleSection(cIdx, sIdx)),
-  addSection: (title, cIdx) => dispatch(addSection(title, cIdx)),
+  toggleSection: (cIdx, sIdx) => dispatch(toggleSection({cIdx, sIdx})),
+  addSection: (title, cIdx) => dispatch(addSection({title, cIdx})),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChaptersList);
