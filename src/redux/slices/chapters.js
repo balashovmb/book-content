@@ -21,7 +21,6 @@ export const fetchChapters = createAsyncThunk(
         "x-apikey": API_KEY
       }
     })
-    console.log(response.data[0].structure)
   return response.data[0].structure;
   }
 )
@@ -59,7 +58,7 @@ const chaptersSlice = createSlice({
       }
     },
     toggleSection(state, action) {
-      return { 
+      return {
         ...state,
         entries: state.entries.map((chapter, cIdx) => (
           cIdx === action.payload.cIdx

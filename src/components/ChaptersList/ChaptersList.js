@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from '../Button';
 
-const ChaptersList = ({ chapters, addChapter, toggleSection, addSection }) => {
+const ChaptersList = ({undo, chapters, addChapter, toggleSection, addSection }) => {
   return (
     <div>
       {chapters && chapters.map((chapter, cIdx) => (
@@ -27,6 +27,7 @@ const ChaptersList = ({ chapters, addChapter, toggleSection, addSection }) => {
         <input type='text' name='title' className='border rounded border-gray-400' />
         <Button className='ml-1'> Add chapter </Button>
       </form>
+      <Button onClick={()=> {undo()}} className='mt-4'>Undo</Button>
     </div>
   )
 };
