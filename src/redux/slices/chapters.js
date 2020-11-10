@@ -2,12 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_KEY = '5f998fb4231ba42851b49eaf';
+const BASE_URL = 'https://bookcontent-534e.restdb.io/rest/chapters';
 
 const initialState = {
   isLoading: false,
   isError: false,
   error: null,
-  entries: []
+  entries: [],
+  needUpload: false,
 };
 const INITIAL_CHAPTER = { sections: [], completed: false };
 
@@ -16,12 +18,28 @@ export const fetchChapters = createAsyncThunk(
   async() => {
     const response = await axios({
       method: 'GET',
-      url: 'https://bookcontent-534e.restdb.io/rest/chapters',
+      url: BASE_URL,
       headers: {
         "x-apikey": API_KEY
       }
     })
   return response.data[0].structure;
+  }
+)
+
+export const uploadChapters = createAsyncThunk(
+  'chapters/uploadAll',
+  async(structure) => {
+    const response = await axios({
+      method: 'PUT',
+      url: `${BASE_URL}/5f998df488dd9b7f00002f79`,
+      headers: {
+        "x-apikey": API_KEY
+      },
+      data: {'structure': JSON.stringify(structure) }
+    })
+    console.log(response.statusText)
+  return response.statusText;
   }
 )
 
@@ -44,7 +62,8 @@ const chaptersSlice = createSlice({
     addChapter(state, action) {
       return {
         ...state,
-        entries: state.entries.concat({ ...INITIAL_CHAPTER, title: action.payload })
+        entries: state.entries.concat({ ...INITIAL_CHAPTER, title: action.payload }),
+        needUpload: true
       }
     },
     addSection(state, action) {
@@ -54,7 +73,8 @@ const chaptersSlice = createSlice({
           idx === action.payload.cIdx
             ? { ...chapter, sections: [...chapter.sections, { title: action.payload.title, completed: false }], completed: false }
             : chapter
-        ))
+        )),
+        needUpload: true
       }
     },
     toggleSection(state, action) {
@@ -64,7 +84,8 @@ const chaptersSlice = createSlice({
           cIdx === action.payload.cIdx
             ? mapChapter(chapter, action)
             : chapter
-       ))
+       )),
+       needUpload: true
       }
     },
   },
@@ -76,6 +97,18 @@ const chaptersSlice = createSlice({
     [fetchChapters.fulfilled]: (state, action) => ({
       ...initialState,
       entries: action.payload
+    }),
+    [uploadChapters.pending]: (state, action) => ({
+      ...state,
+      isLoading: true
+    }),
+    [uploadChapters.fulfilled]: (state, action) => ({
+      ...state,
+      needUpload: false
+    }),
+    [uploadChapters.rejected]: (state, action) => ({
+      ...state,
+      error: action.payload.state
     })
   }
 });
