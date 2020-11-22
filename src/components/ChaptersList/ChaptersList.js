@@ -24,8 +24,8 @@ const ChaptersList = ({undo, chapters, addChapter, toggleSection, addSection }) 
         addChapter(e.target.title.value);
         e.target.title.value = '';
       }} className='mt-1'>
-        <input type='text' name='title' className='border rounded border-gray-400' />
-        <Button className='ml-1'> Add chapter </Button>
+        <input type='text' name='title' className='border rounded border-gray-400' data-testid={`new-chapter-input`}/>
+        <Button className='ml-1' dataTestId={`new-chapter-submit`}> Add chapter </Button>
       </form>
       <Button onClick={()=> {undo()}} className='mt-4'>Undo</Button>
     </div>
@@ -53,8 +53,8 @@ const SectionsList = ({ chapter, toggleSection, cIdx, addSection }) => {
         addSection(e.target.title.value, cIdx);
         e.target.title.value = '';
       }}>
-        <input type='text' name='title' className='border rounded border-gray-400' />
-        <Button className='ml-1'> Add section </Button>
+        <input type='text' name='title' className='border rounded border-gray-400' data-testid={`chapter-${cIdx}-new-section-input`}/>
+        <Button className='ml-1' dataTestId={`chapter-${cIdx}-new-section-submit`}> Add section </Button>
       </form>
     </div>
   )
