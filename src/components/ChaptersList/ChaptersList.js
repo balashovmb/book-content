@@ -7,10 +7,11 @@ const ChaptersList = ({undo, chapters, addChapter, toggleSection, addSection }) 
     <div>
       {chapters && chapters.map((chapter, cIdx) => (
         <div key={cIdx}>
-          <label className='block select-none font-bold'>
+          <label className='block select-none font-bold' data-testid={`chapter-${cIdx}-title`}>
             <input type='checkbox'
               checked={chapter.completed}
               readOnly
+              data-testid={`chapter-${cIdx}-completed`}
             />
             {' '}
             {chapter.title}
@@ -38,9 +39,10 @@ const SectionsList = ({ chapter, toggleSection, cIdx, addSection }) => {
   return (
     <div>
       {chapter.sections.map((section, sIdx) => (
-        <label key={sIdx} className='block select-none ml-2'>
+        <label key={sIdx} className='block select-none ml-2' data-testid={`section-${cIdx}.${sIdx}-title`}>
           <input onChange={() => toggleSection(cIdx, sIdx)}
             type='checkbox'
+            data-testid={`section-${cIdx}.${sIdx}-completed`}
             checked={section.completed}
           />
           {' '}

@@ -13,6 +13,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className="flex flex-col h-full items-center justify-center bg-gray-200 text-gray-700">
+        <Header>Book status</Header>
         <BookStatus />
         <Filter />
         <ChaptersList />
@@ -22,3 +23,9 @@ function App() {
 }
 
 export default App;
+
+const Header = ({children}) => {
+  return(
+    <h2 className="text-lg mb-2">{children}</h2>
+  )
+}
