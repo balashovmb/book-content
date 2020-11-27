@@ -34,7 +34,7 @@ describe('Book status page', () => {
     cy.get('[data-testid="chapter-0-new-section-input"]').type('Test section');
     cy.get('[data-testid="chapter-0-new-section-submit"]').click();
 
-    cy.get('[data-testid="section-0.2-title"]').should('have.text', ' Test section');
+    cy.get('[data-testid="section-0.2-title"]').should('have.text', 'Test section');
     cy.get('[data-testid="section-0.2-completed"]').should('not.be.checked');
     cy.contains('Number of sections: 3');
   });
@@ -43,7 +43,7 @@ describe('Book status page', () => {
     cy.get('[data-testid="new-chapter-input"]').type('Test chapter');
     cy.get('[data-testid="new-chapter-submit"]').click();
 
-    cy.get('[data-testid="chapter-1-title"]').should('have.text', ' Test chapter');
+    cy.get('[data-testid="chapter-1-title"]').should('have.text', 'Test chapter');
     cy.get('[data-testid="chapter-1-completed"]').should('not.be.checked');
     cy.contains('Number of chapters: 2');
   });
