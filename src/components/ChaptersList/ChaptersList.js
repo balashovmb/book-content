@@ -21,9 +21,9 @@ export default ChaptersList;
 const ChapterForm = ({ addChapter }) => (
   <form onSubmit={(e) => {
     e.preventDefault();
-    if (!e.target.title.value) return;
-    addChapter(e.target.title.value);
-    e.target.title.value = '';
+    if (!e.target.elements.title.value) return;
+    addChapter(e.target.elements.title.value);
+    e.target.elements.title.value = '';
   }} className='mt-1'>
     <input type='text' name='title' className='border rounded border-gray-400' data-testid={`new-chapter-input`} />
     <Button className='ml-1' dataTestId={`new-chapter-submit`}> Add chapter </Button>
@@ -61,9 +61,9 @@ const SectionsList = ({ chapter, toggleSection, cIdx, addSection }) => {
 const SectionForm = ({ addSection, cIdx }) => (
   <form onSubmit={(e) => {
     e.preventDefault();
-    if (!e.target.title.value) return;
-    addSection(e.target.title.value, cIdx);
-    e.target.title.value = '';
+    if (!e.target.elements.title.value) return;
+    addSection(e.target.elements.title.value, cIdx);
+    e.target.elements.title.value = '';
   }}>
     <input type='text'
       name='title'
