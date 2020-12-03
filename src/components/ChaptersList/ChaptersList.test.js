@@ -75,5 +75,5 @@ it('Creates new section', async () => {
   userEvent.click(result.getByTestId('chapter-0-new-section-submit'));
 
   // console.log(store.getState().chapters.present.entries[0].sections);
-  await waitFor(() => expect(result.getByText('Test secton')).toBeInTheDocument());
+  await waitFor(() => expect(result.getByText('Test section')).toBeInTheDocument());
 })
