@@ -58,10 +58,14 @@ const SortableList = SortableContainer(({items}) => {
 });
 
 class SortableComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
     items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
   };
   onSortEnd = ({oldIndex, newIndex}) => {
+    console.log(this)
     this.setState(({items}) => ({
       items: arrayMove(items, oldIndex, newIndex),
     }));

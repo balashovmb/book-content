@@ -95,9 +95,10 @@ class SectionsListComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { sections: this.props.sections };
+    console.log(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
   }
-  onSortEnd({ oldIndex, newIndex },e) {
-    console.log(e)
+  onSortEnd({ oldIndex, newIndex }) {
     this.props.moveSection(this.props.cIdx, oldIndex, newIndex);
   }
   render() {
