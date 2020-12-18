@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import arrayMove from 'array-move';
 
 const API_KEY = '5f998fb4231ba42851b49eaf';
 
@@ -67,6 +68,16 @@ const chaptersSlice = createSlice({
        ))
       }
     },
+    moveSection(state, action) {
+      return{
+        ...state,
+        entries: state.entries.map((chapter, cIdx) => (
+          cIdx === action.payload.cIdx
+            ? {...chapter, sections: arrayMove(chapter.sections, action.payload.oldIndex, action.payload.newIndex)}
+            : chapter
+       ))
+      }
+    }
   },
   extraReducers: {
     [fetchChapters.pending]: (state, action) => ({
@@ -80,5 +91,5 @@ const chaptersSlice = createSlice({
   }
 });
 
-export const { addChapter, addSection, toggleSection } = chaptersSlice.actions;
+export const { addChapter, addSection, toggleSection, moveSection } = chaptersSlice.actions;
 export default chaptersSlice.reducer;

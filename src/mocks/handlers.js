@@ -13,7 +13,9 @@ export const handlers = [
             title: "Intro",
             sections: [
               { title: "Section0", completed: true },
-              { title: "Section1", completed: false }
+              { title: "Section1", completed: false },
+              { title: "Section3", completed: false },
+              { title: "Section4", completed: false },
             ],
             completed: false
           }
