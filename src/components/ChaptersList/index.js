@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import ChaptersList from './ChaptersList';
-import { addChapter, addSection, toggleSection } from '../../redux/slices/chapters';
+import { addChapter, addSection, toggleSection, arrangeSection, moveSection } from '../../redux/slices/chapters';
 import { ActionCreators } from 'redux-undo';
 
 const filters = {
@@ -27,7 +27,9 @@ const mapDispatchToProps = (dispatch) => ({
   addChapter: (title) => dispatch(addChapter(title)),
   toggleSection: (cIdx, sIdx) => dispatch(toggleSection({cIdx, sIdx})),
   addSection: (title, cIdx) => dispatch(addSection({title, cIdx})),
-  undo: () => dispatch(ActionCreators.undo())
+  undo: () => dispatch(ActionCreators.undo()),
+  arrangeSection: (cIdx, oldIndex, newIndex) => dispatch(arrangeSection({cIdx, oldIndex, newIndex})),
+  moveSection: (oldCIdx, newCIdx, sIdx) => dispatch(moveSection({oldCIdx, newCIdx, sIdx}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChaptersList);

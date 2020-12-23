@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import arrayMove from 'array-move';
 
 const API_KEY = '5f998fb4231ba42851b49eaf';
 
@@ -67,6 +68,24 @@ const chaptersSlice = createSlice({
        ))
       }
     },
+    arrangeSection(state, action) {
+      state.entries[action.payload.cIdx].sections =
+        arrayMove(
+          state.entries[action.payload.cIdx].sections,
+          action.payload.oldIndex,
+          action.payload.newIndex
+        );
+      return;
+    },
+    moveSection(state, action) {
+      const newChapterIdx = action.payload.newCIdx;
+      const oldChapterIdx = action.payload.oldCIdx;
+      if (oldChapterIdx === newChapterIdx) return;
+      const sectionIdx = action.payload.sIdx;
+      const section = state.entries[oldChapterIdx].sections[sectionIdx];
+      state.entries[oldChapterIdx].sections.splice(sectionIdx, 1);
+      state.entries[newChapterIdx].sections = [...state.entries[newChapterIdx].sections, section]
+    }
   },
   extraReducers: {
     [fetchChapters.pending]: (state, action) => ({
@@ -80,5 +99,5 @@ const chaptersSlice = createSlice({
   }
 });
 
-export const { addChapter, addSection, toggleSection } = chaptersSlice.actions;
+export const { addChapter, addSection, toggleSection, arrangeSection, moveSection } = chaptersSlice.actions;
 export default chaptersSlice.reducer;
