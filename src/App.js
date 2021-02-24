@@ -5,7 +5,7 @@ import ChaptersList from './components/ChaptersList/';
 import store from './redux/store';
 import Filter from './components/Filter';
 import BookStatus from './components/BookStatus';
-import {fetchChapters} from './redux/slices/chapters';
+import { fetchChapters } from './redux/slices/chapters';
 
 store.dispatch(fetchChapters());
 

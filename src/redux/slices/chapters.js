@@ -2,70 +2,62 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_KEY = '5f998fb4231ba42851b49eaf';
+const BASE_URL = 'https://bookcontent-534e.restdb.io/rest/chapters';
+
+const httpClient = axios.create({
+  baseURL: BASE_URL,
+  timeout: 10000,
+  headers: {
+    "x-apikey": API_KEY
+  },
+});
 
 const initialState = {
   isLoading: false,
   isError: false,
   error: null,
-  entries: []
+  entries: [],
+  needUpload: false,
 };
 const INITIAL_CHAPTER = { sections: [], completed: false };
 
 export const fetchChapters = createAsyncThunk(
   'chapters/fetchAll',
   async() => {
-    const response = await axios({
-      method: 'GET',
-      url: 'https://bookcontent-534e.restdb.io/rest/chapters',
-      headers: {
-        "x-apikey": API_KEY
-      }
-    })
-  return response.data[0].structure;
+    const response = await httpClient();
+    return response.data[0].structure;
   }
 )
 
-const mapChapter = (chapter, action) => {
-  const newChapter = {
-    ...chapter,
-    sections: chapter.sections.map((section, sIdx) => (
-      sIdx === action.payload.sIdx
-        ? { ...section, completed: !section.completed }
-        : section)),
+export const syncChapters = createAsyncThunk(
+  'chapters/uploadAll',
+  async(structure) => {
+    const response = httpClient({
+      method: "PUT",
+      url: "/5f998df488dd9b7f00002f79",
+      data: { structure: JSON.stringify(structure) },
+    });
+  return response.statusText;
   }
-  newChapter.completed = newChapter.sections.length === newChapter.sections.filter(section => section.completed).length;
-  return newChapter;
-}
+)
 
 const chaptersSlice = createSlice({
   name: 'chapters',
   initialState,
   reducers: {
     addChapter(state, action) {
-      return {
-        ...state,
-        entries: state.entries.concat({ ...INITIAL_CHAPTER, title: action.payload })
-      }
+      state.entries.push({ ...INITIAL_CHAPTER, title: action.payload })
     },
     addSection(state, action) {
-      return {
-          ...state,
-          entries: state.entries.map((chapter, idx) => (
-          idx === action.payload.cIdx
-            ? { ...chapter, sections: [...chapter.sections, { title: action.payload.title, completed: false }], completed: false }
-            : chapter
-        ))
-      }
+      const chapter = state.entries[action.payload.cIdx];
+      chapter.sections.push({ title: action.payload.title, completed: false });
+      chapter.completed = false;
     },
     toggleSection(state, action) {
-      return {
-        ...state,
-        entries: state.entries.map((chapter, cIdx) => (
-          cIdx === action.payload.cIdx
-            ? mapChapter(chapter, action)
-            : chapter
-       ))
-      }
+      const chapter = state.entries[action.payload.cIdx];
+      const section = chapter.sections[action.payload.sIdx];
+      section.completed = !section.completed;
+      chapter.completed = chapter.sections.length === chapter.sections.filter(section => section.completed).length;
     },
   },
   extraReducers: {
@@ -76,6 +68,18 @@ const chaptersSlice = createSlice({
     [fetchChapters.fulfilled]: (state, action) => ({
       ...initialState,
       entries: action.payload
+    }),
+    [syncChapters.pending]: (state, action) => ({
+      ...state,
+      isLoading: true
+    }),
+    [syncChapters.fulfilled]: (state, action) => ({
+      ...state,
+      needUpload: false
+    }),
+    [syncChapters.rejected]: (state, action) => ({
+      ...state,
+      error: action.payload.state
     })
   }
 });
